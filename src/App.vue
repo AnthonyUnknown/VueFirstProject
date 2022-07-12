@@ -1,17 +1,15 @@
 <template>
-<form >
-    <input v-bind:value="name" @input="changeName" type="text" placeholder="Имя">
-    <input v-bind:value="title" @input="changeTitle" type="text" placeholder="Описание">
-    <button type="submit" @click="createPost">Создать пост</button>
-</form>
-<div class="post" v-for="post in posts">
-<div>{{post.name}}</div>
-<div>{{post.title}}</div>
+<div>
+<post-form @createPost="createPost" />
+<post-list :posts="posts" />
 </div>
 </template>
 
 <script>
+import PostForm from "./components/PostForm.vue"
+import PostList from "./components/PostList.vue"
 export default {
+    components: {PostForm, PostList},
     data () {
         return {
             posts: [
@@ -24,22 +22,8 @@ export default {
         }
     },
     methods: {
-       changeName (event) {
-        this.name = event.target.value
-       },
-       changeTitle (event) {
-        this.title = event.target.value
-       },
-       createPost (event) {
-        event.preventDefault()
-        const newPost = {
-            id: Date.now,
-            name: this.name,
-            title: this.title
-        }
-        this.posts = [...this.posts, newPost]
-        this.name = ""
-        this.title = ""
+       createPost (post) {
+        this.posts.push(post)
        }
     }
 }
@@ -47,9 +31,5 @@ export default {
 
 
 <style scoped>
-        .post {
-            border: 1px solid blue;
-            padding: 20px;
-            margin-top: 20px;
-        }
+        
 </style>
