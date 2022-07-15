@@ -1,25 +1,25 @@
 <template>
-<div class="post" v-for="post in posts">
-<div>{{post.name}}</div>
-<div>{{post.title}}</div>
-</div>
+<post-item @deletePost="$emit('deletePost', post)" v-for="post in posts" :post="post" :key="post.id" />
 </template>
 
 <script>
+import PostItem from "@/components/PostItem"
     export default {
+        components: {
+            PostItem
+        },
         props: {
             posts: {
                 type: Array,
                 required: true,
             }
+        },
+        methods: {
+            
         }
     }
 </script>
 
 <style scoped>
-.post {
-            border: 1px solid blue;
-            padding: 20px;
-            margin-top: 20px;
-        }
+
 </style>
